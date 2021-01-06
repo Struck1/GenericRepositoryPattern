@@ -102,5 +102,26 @@ namespace MusicMarket.API.Controllers
 
         }
 
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult> DeleteMusic(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var music = await _musicService.GetMusicById(id);
+
+            if (music == null)
+            {
+                return NotFound();
+            }
+
+            await _musicService.DeleteMusic(music);
+
+            return NoContent();
+        }
+
     }
 }
